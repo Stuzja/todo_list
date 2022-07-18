@@ -29,13 +29,15 @@ class NotesWidgetState extends State<NotesWidget> {
                   "~To Do List~",
                   style: Theme.of(context).textTheme.headline1,
                 ),
-                Container(
-                  color: Colors.white,
-                  child: Column(
-                    children: [ for (var note in ListNotes)
-                    Note(title: note.title, text: note.text, completed: note.completed)],
-                  ),
-                )
+                Column(
+                  children: [
+                    for (var note in ListNotes)
+                      Note(
+                          title: note.title,
+                          text: note.text,
+                          completed: note.completed)
+                  ],
+                ),
               ],
             ))
       ],
