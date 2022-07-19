@@ -52,7 +52,7 @@ class NoteState extends State<Note> {
             children: [
               IconButton(
                   onPressed: () {
-                    _displayEditDialog(context, widget.id, widget.editFunc);
+                    _displayEditDialog(context, widget.id, widget.title, widget.text, widget.editFunc);
                   },
                   icon: const Icon(Icons.edit_outlined)),
               IconButton(
@@ -94,11 +94,14 @@ class NoteState extends State<Note> {
           );
         });
   }
+
 //Диалог при изменении задачи
   Future<void> _displayEditDialog(BuildContext context, int id,
-      void Function(int, String, String) edit) async {
-    String title = "";
-    String text = "";
+      String title, String text, void Function(int, String, String) edit) async {
+    var textControllerTitle = TextEditingController();
+    textControllerTitle.text = title;
+    var textControllerText = TextEditingController();
+    textControllerText.text = text;
     return showDialog(
         context: context,
         builder: (context) {
@@ -108,6 +111,7 @@ class NoteState extends State<Note> {
                 child: Wrap(runSpacing: 2, children: [
               const Text("Введите название:"),
               TextFormField(
+                controller: textControllerTitle,
                 onChanged: (value) {
                   setState(() {
                     title = value;
@@ -117,6 +121,7 @@ class NoteState extends State<Note> {
               const Text("Введите описание:"),
               TextFormField(
                 maxLines: 2,
+                controller: textControllerText,
                 onChanged: (value) {
                   setState(() {
                     text = value;

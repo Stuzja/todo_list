@@ -14,13 +14,13 @@ class NotesWidgetState extends State<NotesWidget> {
   //Процедура удаления и обновления родительского состояния(передаю в дочерний виджет самой задачи)
   deleteNote(int id) {
     setState(() {
-      ListNotes.removeAt(id - 1);
+      ListNotes.removeAt(id);
     });
   }
   //Процедура редактирования и обновления
   editNote(int id, String title, String text) {
     setState(() {
-      ListNotes.removeAt(id - 1);
+      ListNotes.removeAt(id);
       ListNotes.add(Note(
         title: title,
         text: text,
@@ -124,7 +124,7 @@ class NotesWidgetState extends State<NotesWidget> {
                       title: title,
                       text: text,
                       completed: false,
-                      id: ListNotes.length + 1,
+                      id: ListNotes.length,
                       deleteFunc: deleteNote,
                       editFunc: editNote,
                     ));
