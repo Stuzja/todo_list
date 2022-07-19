@@ -1,8 +1,4 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-
-import 'list_notes.dart';
 
 class Note extends StatefulWidget {
   String title;
@@ -10,6 +6,7 @@ class Note extends StatefulWidget {
   bool completed;
   int id;
   final void Function(int) deleteFunc;
+  final void Function(int, String, String) editFunc;
 
   Note(
       {Key? key,
@@ -17,7 +14,8 @@ class Note extends StatefulWidget {
       required this.text,
       required this.completed,
       required this.id,
-      required this.deleteFunc})
+      required this.deleteFunc,
+      required this.editFunc})
       : super(key: key);
 
   @override
@@ -49,16 +47,25 @@ class NoteState extends State<Note> {
           ),
           const Divider(),
           Text(widget.text),
-          Align(
-              alignment: Alignment.bottomRight,
-              child: IconButton(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              IconButton(
+                  onPressed: () {
+                    _displayEditDialog(context, widget.id, widget.editFunc);
+                  },
+                  icon: const Icon(Icons.edit_outlined)),
+              IconButton(
                   onPressed: () {
                     _displayDeleteDialog(context, widget.id, widget.deleteFunc);
                   },
-                  icon: const Icon(Icons.delete_outline_outlined)))
+                  icon: const Icon(Icons.delete_outline_outlined))
+            ],
+          )
         ]));
   }
 
+//Диалог при удалении задачи
   Future<void> _displayDeleteDialog(
       BuildContext context, int id, void Function(int) delete) async {
     return showDialog(
@@ -80,6 +87,56 @@ class NoteState extends State<Note> {
                 child: const Text('Подтвердить'),
                 onPressed: () {
                   delete(id);
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        });
+  }
+//Диалог при изменении задачи
+  Future<void> _displayEditDialog(BuildContext context, int id,
+      void Function(int, String, String) edit) async {
+    String title = "";
+    String text = "";
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Изменение задачи'),
+            content: SingleChildScrollView(
+                child: Wrap(runSpacing: 2, children: [
+              const Text("Введите название:"),
+              TextFormField(
+                onChanged: (value) {
+                  setState(() {
+                    title = value;
+                  });
+                },
+              ),
+              const Text("Введите описание:"),
+              TextFormField(
+                maxLines: 2,
+                onChanged: (value) {
+                  setState(() {
+                    text = value;
+                  });
+                },
+              ),
+            ])),
+            actions: <Widget>[
+              ElevatedButton(
+                child: const Text('Отмена'),
+                onPressed: () {
+                  setState(() {
+                    Navigator.pop(context);
+                  });
+                },
+              ),
+              ElevatedButton(
+                child: const Text('Подтвердить'),
+                onPressed: () {
+                  edit(id, title, text);
                   Navigator.pop(context);
                 },
               ),
