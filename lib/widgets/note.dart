@@ -5,8 +5,9 @@ class Note extends StatefulWidget {
   String text;
   bool completed;
   int id;
+  DateTime date;
   final void Function(int) deleteFunc;
-  final void Function(int, String, String) editFunc;
+  final void Function(int, String, String, DateTime) editFunc;
 
   Note(
       {Key? key,
@@ -14,6 +15,7 @@ class Note extends StatefulWidget {
       required this.text,
       required this.completed,
       required this.id,
+      required this.date,
       required this.deleteFunc,
       required this.editFunc})
       : super(key: key);
@@ -50,9 +52,11 @@ class NoteState extends State<Note> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
+              Text(widget.date.toString()),
               IconButton(
                   onPressed: () {
-                    _displayEditDialog(context, widget.id, widget.title, widget.text, widget.editFunc);
+                    _displayEditDialog(context, widget.id, widget.title,
+                        widget.text, widget.date, widget.editFunc);
                   },
                   icon: const Icon(Icons.edit_outlined)),
               IconButton(
@@ -96,8 +100,13 @@ class NoteState extends State<Note> {
   }
 
 //Диалог при изменении задачи
-  Future<void> _displayEditDialog(BuildContext context, int id,
-      String title, String text, void Function(int, String, String) edit) async {
+  Future<void> _displayEditDialog(
+      BuildContext context,
+      int id,
+      String title,
+      String text,
+      DateTime date,
+      void Function(int, String, String, DateTime) edit) async {
     var textControllerTitle = TextEditingController();
     textControllerTitle.text = title;
     var textControllerText = TextEditingController();
@@ -128,6 +137,15 @@ class NoteState extends State<Note> {
                   });
                 },
               ),
+              const Text("Введите дату:"),
+              TextFormField(
+                maxLines: 2,
+                onChanged: (value) {
+                  setState(() {
+                    date = DateTime.parse(value);
+                  });
+                },
+              ),
             ])),
             actions: <Widget>[
               ElevatedButton(
@@ -141,7 +159,7 @@ class NoteState extends State<Note> {
               ElevatedButton(
                 child: const Text('Подтвердить'),
                 onPressed: () {
-                  edit(id, title, text);
+                  edit(id, title, text, date);
                   Navigator.pop(context);
                 },
               ),

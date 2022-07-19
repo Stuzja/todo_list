@@ -17,8 +17,9 @@ class NotesWidgetState extends State<NotesWidget> {
       ListNotes.removeAt(id);
     });
   }
+
   //Процедура редактирования и обновления
-  editNote(int id, String title, String text) {
+  editNote(int id, String title, String text, DateTime date) {
     setState(() {
       ListNotes.removeAt(id);
       ListNotes.add(Note(
@@ -26,6 +27,7 @@ class NotesWidgetState extends State<NotesWidget> {
         text: text,
         completed: false,
         id: id,
+        date: date,
         deleteFunc: deleteNote,
         editFunc: editNote,
       ));
@@ -61,6 +63,7 @@ class NotesWidgetState extends State<NotesWidget> {
                             text: note.text,
                             completed: note.completed,
                             id: note.id,
+                            date: note.date,
                             deleteFunc: note.deleteFunc,
                             editFunc: note.editFunc,
                           ),
@@ -77,10 +80,13 @@ class NotesWidgetState extends State<NotesWidget> {
       ],
     );
   }
+
+
 //Диалог при добавлении задачи
   Future<void> _displayAddNoteDialog(BuildContext context) async {
     String title = "";
     String text = "";
+    DateTime date = DateTime.now();
     return showDialog(
         context: context,
         builder: (context) {
@@ -105,6 +111,12 @@ class NotesWidgetState extends State<NotesWidget> {
                   });
                 },
               ),
+              const Text("Введите дату:"),
+              DatePickerDialog(
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime.now(),
+                  lastDate: DateTime.utc(2100),
+                 )
             ])),
             actions: <Widget>[
               ElevatedButton(
@@ -125,6 +137,7 @@ class NotesWidgetState extends State<NotesWidget> {
                       text: text,
                       completed: false,
                       id: ListNotes.length,
+                      date: date,
                       deleteFunc: deleteNote,
                       editFunc: editNote,
                     ));
