@@ -12,17 +12,17 @@ class NotesWidget extends StatefulWidget {
 }
 
 class NotesWidgetState extends State<NotesWidget> {
-  Future<void> _displayAddNoteDialog(BuildContext contex) async {
+  Future<void> _displayAddNoteDialog(BuildContext context) async {
     String title = "";
     String text = "";
     return showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text('Добавить задачу'),
+            title: const Text('Добавление задачи'),
             content: SingleChildScrollView(
-                child: Wrap(children: [
-              Text("Введите название:"),
+                child: Wrap(runSpacing: 2, children: [
+              const Text("Введите название:"),
               TextFormField(
                 onChanged: (value) {
                   setState(() {
@@ -30,9 +30,9 @@ class NotesWidgetState extends State<NotesWidget> {
                   });
                 },
               ),
-              Text("Введите описание:"),
+              const Text("Введите описание:"),
               TextFormField(
-                maxLines: 3,
+                maxLines: 2,
                 onChanged: (value) {
                   setState(() {
                     text = value;
@@ -42,7 +42,7 @@ class NotesWidgetState extends State<NotesWidget> {
             ])),
             actions: <Widget>[
               ElevatedButton(
-                child: Text('Отмена'),
+                child: const Text('Отмена'),
                 onPressed: () {
                   setState(() {
                     Navigator.pop(context);
@@ -50,12 +50,12 @@ class NotesWidgetState extends State<NotesWidget> {
                 },
               ),
               ElevatedButton(
-                child: Text('Добавить'),
+                child: const Text('Подтвердить'),
                 onPressed: () {
                   setState(() {
                     Navigator.pop(context);
                     widget.notes
-                        .add(Note(title: title, text: text, completed: false));
+                        .add(Note(title: title, text: text, completed: false, id: ListNotes.length+1));
                   });
                 },
               ),
@@ -91,7 +91,8 @@ class NotesWidgetState extends State<NotesWidget> {
                           Note(
                               title: note.title,
                               text: note.text,
-                              completed: note.completed),
+                              completed: note.completed,
+                              id: note.id),
                       ],
                     ),
                     IconButton(
