@@ -12,37 +12,50 @@ class NotesWidget extends StatefulWidget {
 }
 
 class NotesWidgetState extends State<NotesWidget> {
-  Future<void> _displayTextInputDialog(BuildContext context) async {
+  Future<void> _displayAddNoteDialog(BuildContext contex) async {
+    String title = "";
+    String text = "";
     return showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('TextField in Dialog'),
-            content: TextField(
-              onChanged: (value) {
-                setState(() {});
-              },
-              //  controller: _textFieldController,
-              decoration: InputDecoration(hintText: "Text Field in Dialog"),
-            ),
+            title: const Text('Добавить задачу'),
+            content: SingleChildScrollView(
+                child: Wrap(children: [
+              Text("Введите название:"),
+              TextFormField(
+                onChanged: (value) {
+                  setState(() {
+                    title = value;
+                  });
+                },
+              ),
+              Text("Введите описание:"),
+              TextFormField(
+                maxLines: 3,
+                onChanged: (value) {
+                  setState(() {
+                    text = value;
+                  });
+                },
+              ),
+            ])),
             actions: <Widget>[
-              FlatButton(
-                color: Colors.red,
-                textColor: Colors.white,
-                child: Text('CANCEL'),
+              ElevatedButton(
+                child: Text('Отмена'),
                 onPressed: () {
                   setState(() {
                     Navigator.pop(context);
                   });
                 },
               ),
-              FlatButton(
-                color: Colors.green,
-                textColor: Colors.white,
-                child: Text('OK'),
+              ElevatedButton(
+                child: Text('Добавить'),
                 onPressed: () {
                   setState(() {
                     Navigator.pop(context);
+                    widget.notes
+                        .add(Note(title: title, text: text, completed: false));
                   });
                 },
               ),
@@ -83,11 +96,8 @@ class NotesWidgetState extends State<NotesWidget> {
                     ),
                     IconButton(
                         onPressed: () {
-                           _displayTextInputDialog(context);
-                          setState(() {
-                            widget.notes.add(
-                                Note(title: "", text: "", completed: false));
-                          });
+                          _displayAddNoteDialog(context);
+                          setState(() {});
                         },
                         icon: const Icon(Icons.add_circle_outline))
                   ],
