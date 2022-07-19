@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 import 'list_notes.dart';
@@ -7,13 +9,15 @@ class Note extends StatefulWidget {
   String text;
   bool completed;
   int id;
+  final void Function(int) deleteFunc;
 
   Note(
       {Key? key,
       required this.title,
       required this.text,
       required this.completed,
-      required this.id})
+      required this.id,
+      required this.deleteFunc})
       : super(key: key);
 
   @override
@@ -49,14 +53,14 @@ class NoteState extends State<Note> {
               alignment: Alignment.bottomRight,
               child: IconButton(
                   onPressed: () {
-                    _displayDeleteDialog(context, widget.id);
-                    setState(() {});
+                    _displayDeleteDialog(context, widget.id, widget.deleteFunc);
                   },
                   icon: const Icon(Icons.delete_outline_outlined)))
         ]));
   }
 
-  Future<void> _displayDeleteDialog(BuildContext context, int id) async {
+  Future<void> _displayDeleteDialog(
+      BuildContext context, int id, void Function(int) delete) async {
     return showDialog(
         context: context,
         builder: (context) {
@@ -75,10 +79,8 @@ class NoteState extends State<Note> {
               ElevatedButton(
                 child: const Text('Подтвердить'),
                 onPressed: () {
-                  setState(() {
-                    ListNotes.removeWhere((item) => item.id == id);
-                    Navigator.pop(context);
-                  });
+                  delete(id);
+                  Navigator.pop(context);
                 },
               ),
             ],

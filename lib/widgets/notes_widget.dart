@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:todo_list/widgets/add_note.dart';
 import 'package:todo_list/widgets/list_notes.dart';
@@ -54,14 +56,24 @@ class NotesWidgetState extends State<NotesWidget> {
                 onPressed: () {
                   setState(() {
                     Navigator.pop(context);
-                    widget.notes
-                        .add(Note(title: title, text: text, completed: false, id: ListNotes.length+1));
+                    widget.notes.add(Note(
+                        title: title,
+                        text: text,
+                        completed: false,
+                        id: ListNotes.length + 1,
+                        deleteFunc: deleteNote));
                   });
                 },
               ),
             ],
           );
         });
+  }
+
+  deleteNote(int id) {
+    setState(() {
+      ListNotes.removeAt(id - 1);
+    });
   }
 
   @override
@@ -92,7 +104,8 @@ class NotesWidgetState extends State<NotesWidget> {
                               title: note.title,
                               text: note.text,
                               completed: note.completed,
-                              id: note.id),
+                              id: note.id,
+                              deleteFunc: note.deleteFunc),
                       ],
                     ),
                     IconButton(
