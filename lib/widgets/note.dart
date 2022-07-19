@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Note extends StatefulWidget {
   String title;
@@ -52,7 +53,7 @@ class NoteState extends State<Note> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text(widget.date.toString()),
+              Text(DateFormat("yyyy-MM-dd").format(widget.date)),
               IconButton(
                   onPressed: () {
                     _displayEditDialog(context, widget.id, widget.title,
@@ -167,4 +168,6 @@ class NoteState extends State<Note> {
           );
         });
   }
+
+  
 }

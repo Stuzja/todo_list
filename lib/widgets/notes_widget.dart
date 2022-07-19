@@ -81,12 +81,25 @@ class NotesWidgetState extends State<NotesWidget> {
     );
   }
 
+  DateTime date = DateTime.now();
+  Future<void> _selectDate(BuildContext context) async {
+    DateTime? datePicker = await showDatePicker(
+        context: context,
+        initialDate: date,
+        firstDate: DateTime.now(),
+        lastDate: DateTime.utc(2100));
+    if (datePicker != null && datePicker != date) {
+      setState(() {
+        date = datePicker;
+      });
+    }
+  }
 
 //Диалог при добавлении задачи
   Future<void> _displayAddNoteDialog(BuildContext context) async {
     String title = "";
     String text = "";
-    DateTime date = DateTime.now();
+    //DateTime date = DateTime.now();
     return showDialog(
         context: context,
         builder: (context) {
@@ -112,11 +125,12 @@ class NotesWidgetState extends State<NotesWidget> {
                 },
               ),
               const Text("Введите дату:"),
-              DatePickerDialog(
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime.now(),
-                  lastDate: DateTime.utc(2100),
-                 )
+              ElevatedButton(
+                child: const Text('Выберите дату'),
+                onPressed: () {
+                  _selectDate(context);
+                },
+              ),
             ])),
             actions: <Widget>[
               ElevatedButton(
