@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../functions.dart';
+
 class EditNoteDialog extends StatefulWidget {
   final int id;
   String title;
   String text;
   DateTime date;
-  final void Function(int, String, String, DateTime) editFunc;
+  final void Function(void Function()) refreshFunc;
 
   EditNoteDialog({
     Key? key,
@@ -14,7 +16,7 @@ class EditNoteDialog extends StatefulWidget {
     required this.title,
     required this.text,
     required this.date,
-    required this.editFunc,
+    required this.refreshFunc,
   }) : super(key: key);
 
   @override
@@ -53,7 +55,7 @@ class EditNoteDialogState extends State<EditNoteDialog> {
           },
         ),
         const Text("Введите дату:"),
-         SizedBox(
+        SizedBox(
           height: 200,
           child: CupertinoDatePicker(
             mode: CupertinoDatePickerMode.date,
@@ -77,7 +79,8 @@ class EditNoteDialogState extends State<EditNoteDialog> {
         ElevatedButton(
           child: const Text('Подтвердить'),
           onPressed: () {
-            widget.editFunc(widget.id, widget.title, widget.text, widget.date);
+            widget.refreshFunc(() =>
+                editNote(widget.id, widget.title, widget.text, widget.date));
             Navigator.pop(context);
           },
         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list/widgets/dialogs/addnote_dialog.dart';
 import 'package:todo_list/widgets/list_notes.dart';
+import 'functions.dart';
 import 'note.dart';
 import 'note_widget.dart';
 
@@ -14,40 +15,6 @@ class NotesWidgetState extends State<NotesWidget> {
   refresh(void Function() func) {
     setState(() {
       func();
-    });
-  }
-
-  //Процедура удаления и обновления родительского состояния(передаю в дочерний виджет самой задачи)
-  addNote(String title, String text, DateTime date) {
-    setState(() {
-      listWaiting.add(Note(
-        title: title,
-        text: text,
-        completed: false,
-        id: count + 1,
-        date: date,
-      ));
-      count++;
-    });
-  }
-
-  //Я хз как это можно было иначе сделать~~~
-  deleteNote(int id) {
-    setState(() {
-      if (listWaiting.where((element) => element.id == id).isNotEmpty) {
-        listWaiting.removeWhere((element) => element.id == id);
-      } else {
-        listReady.removeWhere((element) => element.id == id);
-      }
-    });
-  }
-
-  //Процедура редактирования и обновления
-  editNote(int id, String title, String text, DateTime date) {
-    setState(() {
-      listWaiting[id].title = title;
-      listWaiting[id].text = text;
-      listWaiting[id].date = date;
     });
   }
 
@@ -77,8 +44,6 @@ class NotesWidgetState extends State<NotesWidget> {
                         for (var elem in listWaiting)
                           NoteWidget(
                             note: elem,
-                            deleteFunc: deleteNote,
-                            editFunc: editNote,
                             refreshFunc: refresh,
                           ),
                         Text(
@@ -88,18 +53,19 @@ class NotesWidgetState extends State<NotesWidget> {
                         for (var elem in listReady)
                           NoteWidget(
                             note: elem,
-                            deleteFunc: deleteNote,
-                            editFunc: editNote,
                             refreshFunc: refresh,
                           ),
                       ],
                     ),
                     IconButton(
                         onPressed: () {
+                          setState(() {
+                          
                           showDialog(
                             context: context,
-                            builder: (_) => AddNoteDialog(addFunc: addNote),
+                            builder: (_) => AddNoteDialog(refreshFunc: refresh),
                           );
+                          });
                         },
                         icon: const Icon(Icons.add_circle_outline))
                   ],

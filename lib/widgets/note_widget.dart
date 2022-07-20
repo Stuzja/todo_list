@@ -9,14 +9,10 @@ import 'note.dart';
 class NoteWidget extends StatefulWidget {
   Note note;
   final void Function(void Function()) refreshFunc;
-  final void Function(int) deleteFunc;
-  final void Function(int, String, String, DateTime) editFunc;
 
   NoteWidget(
       {Key? key,
       required this.note,
-      required this.deleteFunc,
-      required this.editFunc,
       required this.refreshFunc})
       : super(key: key);
 
@@ -70,7 +66,7 @@ class NoteWidgetState extends State<NoteWidget> {
                             title: widget.note.title,
                             text: widget.note.text,
                             date: widget.note.date,
-                            editFunc: widget.editFunc),
+                            refreshFunc: widget.refreshFunc),
                       );
                     },
                     icon: const Icon(Icons.edit_outlined)),
@@ -79,7 +75,8 @@ class NoteWidgetState extends State<NoteWidget> {
                     showDialog(
                       context: context,
                       builder: (_) => DeleteNoteDialog(
-                          id: widget.note.id, deleteFunc: widget.deleteFunc),
+                          id: widget.note.id,
+                          refreshFunc: widget.refreshFunc),
                     );
                   },
                   icon: const Icon(Icons.delete_outline_outlined))

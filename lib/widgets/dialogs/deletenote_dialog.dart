@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../functions.dart';
+import '../list_notes.dart';
+
 class DeleteNoteDialog extends StatefulWidget {
   final int id;
-  final void Function(int) deleteFunc;
-  const DeleteNoteDialog({Key? key, required this.deleteFunc, required this.id})
+  final void Function(void Function()) refreshFunc;
+  const DeleteNoteDialog(
+      {Key? key, required this.id, required this.refreshFunc})
       : super(key: key);
 
   @override
@@ -28,7 +32,7 @@ class DeleteNoteDialogState extends State<DeleteNoteDialog> {
         ElevatedButton(
           child: const Text('Подтвердить'),
           onPressed: () {
-            widget.deleteFunc(widget.id);
+            widget.refreshFunc(() => deleteNote(widget.id));
             Navigator.pop(context);
           },
         ),

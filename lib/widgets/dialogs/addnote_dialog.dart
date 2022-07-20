@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../functions.dart';
+
 class AddNoteDialog extends StatefulWidget {
-  final void Function(String title, String text, DateTime date) addFunc;
-  const AddNoteDialog({Key? key, required this.addFunc}) : super(key: key);
+  final void Function(void Function()) refreshFunc;
+  const AddNoteDialog({Key? key, required this.refreshFunc}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => AddNoteDialogState();
@@ -62,7 +64,7 @@ class AddNoteDialogState extends State<AddNoteDialog> {
         ElevatedButton(
           child: const Text('Подтвердить'),
           onPressed: () {
-            widget.addFunc(title, text, date);
+            widget.refreshFunc(() => addNote(title, text, date));
             Navigator.pop(context);
           },
         ),
