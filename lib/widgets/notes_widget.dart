@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:todo_list/widgets/addnote_dialog.dart';
+import 'package:todo_list/widgets/dialogs/addnote_dialog.dart';
 import 'package:todo_list/widgets/list_notes.dart';
 import 'note.dart';
 
 class NotesWidget extends StatefulWidget {
-  NotesWidget({Key? key}) : super(key: key);
+  const NotesWidget({Key? key}) : super(key: key);
 
   @override
   createState() => NotesWidgetState();
@@ -36,8 +36,7 @@ class NotesWidgetState extends State<NotesWidget> {
   //Процедура редактирования и обновления
   editNote(int id, String title, String text, DateTime date) {
     setState(() {
-      ListNotes.removeAt(id);
-      ListNotes.add(Note(
+      ListNotes[id] = Note(
         title: title,
         text: text,
         completed: false,
@@ -45,7 +44,7 @@ class NotesWidgetState extends State<NotesWidget> {
         date: date,
         deleteFunc: deleteNote,
         editFunc: editNote,
-      ));
+      );
     });
   }
 
@@ -86,12 +85,10 @@ class NotesWidgetState extends State<NotesWidget> {
                     ),
                     IconButton(
                         onPressed: () {
-                          setState(() {
-                            showDialog(
-                              context: context,
-                              builder: (_) => AddNoteDialog(addFunc: addNote),
-                            );
-                          });
+                          showDialog(
+                            context: context,
+                            builder: (_) => AddNoteDialog(addFunc: addNote),
+                          );
                         },
                         icon: const Icon(Icons.add_circle_outline))
                   ],

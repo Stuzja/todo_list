@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'deletenote_dialog.dart';
-import 'editnote_dialog.dart';
+import 'dialogs/deletenote_dialog.dart';
+import 'dialogs/editnote_dialog.dart';
+
 
 class Note extends StatefulWidget {
   String title;
@@ -71,11 +72,11 @@ class NoteState extends State<Note> {
                   icon: const Icon(Icons.edit_outlined)),
               IconButton(
                   onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (_) => DeleteNoteDialog(
-                            id: widget.id, deleteFunc: widget.deleteFunc),
-                      );
+                    showDialog(
+                      context: context,
+                      builder: (_) => DeleteNoteDialog(
+                          id: widget.id, deleteFunc: widget.deleteFunc),
+                    );
                   },
                   icon: const Icon(Icons.delete_outline_outlined))
             ],
