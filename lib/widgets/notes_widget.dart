@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_list/widgets/dialogs/addnote_dialog.dart';
 import 'package:todo_list/widgets/list_notes.dart';
 import 'note.dart';
+import 'note_widget.dart';
 
 class NotesWidget extends StatefulWidget {
   const NotesWidget({Key? key}) : super(key: key);
@@ -20,8 +21,6 @@ class NotesWidgetState extends State<NotesWidget> {
         completed: false,
         id: ListNotes.length,
         date: date,
-        deleteFunc: deleteNote,
-        editFunc: editNote,
       ));
     });
   }
@@ -36,15 +35,9 @@ class NotesWidgetState extends State<NotesWidget> {
   //Процедура редактирования и обновления
   editNote(int id, String title, String text, DateTime date) {
     setState(() {
-      ListNotes[id] = Note(
-        title: title,
-        text: text,
-        completed: false,
-        id: id,
-        date: date,
-        deleteFunc: deleteNote,
-        editFunc: editNote,
-      );
+       ListNotes[id].title = title;
+       ListNotes[id].text = text;
+       ListNotes[id].date = date;
     });
   }
 
@@ -71,15 +64,11 @@ class NotesWidgetState extends State<NotesWidget> {
                     Wrap(
                       runSpacing: MediaQuery.of(context).size.height * 0.01,
                       children: <Widget>[
-                        for (var note in ListNotes)
-                          Note(
-                            title: note.title,
-                            text: note.text,
-                            completed: note.completed,
-                            id: note.id,
-                            date: note.date,
-                            deleteFunc: note.deleteFunc,
-                            editFunc: note.editFunc,
+                        for (var elem in ListNotes)
+                          NoteWidget(
+                            note: elem,
+                            deleteFunc: deleteNote,
+                            editFunc: editNote,
                           ),
                       ],
                     ),
