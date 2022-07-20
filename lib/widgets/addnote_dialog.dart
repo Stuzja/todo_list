@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class AddNoteDialog extends StatefulWidget {
   final void Function(String title, String text, DateTime date) addFunc;
@@ -11,6 +12,8 @@ class AddNoteDialog extends StatefulWidget {
 class AddNoteDialogState extends State<AddNoteDialog> {
   String title = "";
   String text = "";
+  DateTime date = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -35,11 +38,16 @@ class AddNoteDialogState extends State<AddNoteDialog> {
           },
         ),
         const Text("Введите дату:"),
-        ElevatedButton(
-          child: const Text('Выберите дату'),
-          onPressed: () {
-            //  _selectDate(context);
-          },
+        SizedBox(
+          height: 200,
+          child: CupertinoDatePicker(
+            mode: CupertinoDatePickerMode.date,
+            initialDateTime: DateTime.now(),
+            minimumDate: DateTime.now(),
+            onDateTimeChanged: (DateTime newDateTime) {
+              date = newDateTime;
+            },
+          ),
         ),
       ])),
       actions: <Widget>[
@@ -54,8 +62,8 @@ class AddNoteDialogState extends State<AddNoteDialog> {
         ElevatedButton(
           child: const Text('Подтвердить'),
           onPressed: () {
-              widget.addFunc(title, text, DateTime.now());
-              Navigator.pop(context);
+            widget.addFunc(title, text, date);
+            Navigator.pop(context);
           },
         ),
       ],

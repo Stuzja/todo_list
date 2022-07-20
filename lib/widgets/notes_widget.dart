@@ -11,6 +11,7 @@ class NotesWidget extends StatefulWidget {
 }
 
 class NotesWidgetState extends State<NotesWidget> {
+  //Процедура удаления и обновления родительского состояния(передаю в дочерний виджет самой задачи)
   addNote(String title, String text, DateTime date) {
     setState(() {
       ListNotes.add(Note(
@@ -18,14 +19,14 @@ class NotesWidgetState extends State<NotesWidget> {
         text: text,
         completed: false,
         id: ListNotes.length,
-        date: DateTime.now(),
+        date: date,
         deleteFunc: deleteNote,
         editFunc: editNote,
       ));
     });
   }
 
-  //Процедура удаления и обновления родительского состояния(передаю в дочерний виджет самой задачи)
+  //Я хз как это можно было иначе сделать~~~
   deleteNote(int id) {
     setState(() {
       ListNotes.removeAt(id);
@@ -97,19 +98,5 @@ class NotesWidgetState extends State<NotesWidget> {
                 )))
       ],
     );
-  }
-
-  DateTime date = DateTime.now();
-  Future<void> _selectDate(BuildContext context) async {
-    DateTime? datePicker = await showDatePicker(
-        context: context,
-        initialDate: date,
-        firstDate: DateTime.now(),
-        lastDate: DateTime.utc(2100));
-    if (datePicker != null && datePicker != date) {
-      setState(() {
-        date = datePicker;
-      });
-    }
   }
 }

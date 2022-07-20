@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class EditNoteDialog extends StatefulWidget {
@@ -52,13 +53,16 @@ class EditNoteDialogState extends State<EditNoteDialog> {
           },
         ),
         const Text("Введите дату:"),
-        TextFormField(
-          maxLines: 2,
-          onChanged: (value) {
-            setState(() {
-              widget.date = DateTime.parse(value);
-            });
-          },
+         SizedBox(
+          height: 200,
+          child: CupertinoDatePicker(
+            mode: CupertinoDatePickerMode.date,
+            initialDateTime: DateTime.now(),
+            minimumDate: DateTime.now(),
+            onDateTimeChanged: (DateTime newDateTime) {
+              widget.date = newDateTime;
+            },
+          ),
         ),
       ])),
       actions: <Widget>[
