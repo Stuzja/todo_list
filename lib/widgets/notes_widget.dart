@@ -4,8 +4,7 @@ import 'package:todo_list/widgets/list_notes.dart';
 import 'note.dart';
 
 class NotesWidget extends StatefulWidget {
-  List<Note> notes;
-  NotesWidget({Key? key, required this.notes}) : super(key: key);
+  NotesWidget({Key? key}) : super(key: key);
 
   @override
   createState() => NotesWidgetState();
