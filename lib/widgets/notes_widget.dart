@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list/widgets/addnote_dialog.dart';
 import 'package:todo_list/widgets/list_notes.dart';
 import 'note.dart';
 
@@ -11,6 +12,20 @@ class NotesWidget extends StatefulWidget {
 }
 
 class NotesWidgetState extends State<NotesWidget> {
+  addNote(String title, String text, DateTime date) {
+    setState(() {
+      ListNotes.add(Note(
+        title: title,
+        text: text,
+        completed: false,
+        id: ListNotes.length,
+        date: DateTime.now(),
+        deleteFunc: deleteNote,
+        editFunc: editNote,
+      ));
+    });
+  }
+
   //Процедура удаления и обновления родительского состояния(передаю в дочерний виджет самой задачи)
   deleteNote(int id) {
     setState(() {
@@ -71,8 +86,12 @@ class NotesWidgetState extends State<NotesWidget> {
                     ),
                     IconButton(
                         onPressed: () {
-                          _displayAddNoteDialog(context);
-                          setState(() {});
+                          setState(() {
+                            showDialog(
+                              context: context,
+                              builder: (_) => AddNoteDialog(addFunc: addNote),
+                            );
+                          });
                         },
                         icon: const Icon(Icons.add_circle_outline))
                   ],
@@ -93,73 +112,5 @@ class NotesWidgetState extends State<NotesWidget> {
         date = datePicker;
       });
     }
-  }
-
-//Диалог при добавлении задачи
-  Future<void> _displayAddNoteDialog(BuildContext context) async {
-    String title = "";
-    String text = "";
-    //DateTime date = DateTime.now();
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text('Добавление задачи'),
-            content: SingleChildScrollView(
-                child: Wrap(runSpacing: 2, children: [
-              const Text("Введите название:"),
-              TextFormField(
-                onChanged: (value) {
-                  setState(() {
-                    title = value;
-                  });
-                },
-              ),
-              const Text("Введите описание:"),
-              TextFormField(
-                maxLines: 2,
-                onChanged: (value) {
-                  setState(() {
-                    text = value;
-                  });
-                },
-              ),
-              const Text("Введите дату:"),
-              ElevatedButton(
-                child: const Text('Выберите дату'),
-                onPressed: () {
-                  _selectDate(context);
-                },
-              ),
-            ])),
-            actions: <Widget>[
-              ElevatedButton(
-                child: const Text('Отмена'),
-                onPressed: () {
-                  setState(() {
-                    Navigator.pop(context);
-                  });
-                },
-              ),
-              ElevatedButton(
-                child: const Text('Подтвердить'),
-                onPressed: () {
-                  setState(() {
-                    Navigator.pop(context);
-                    widget.notes.add(Note(
-                      title: title,
-                      text: text,
-                      completed: false,
-                      id: ListNotes.length,
-                      date: date,
-                      deleteFunc: deleteNote,
-                      editFunc: editNote,
-                    ));
-                  });
-                },
-              ),
-            ],
-          );
-        });
   }
 }
