@@ -26,3 +26,20 @@ editNote(int id, String title, String text, DateTime date) {
   listWaiting[index].text = text;
   listWaiting[index].date = date;
 }
+
+List<List<Note>> listDivider(List<Note> list) {
+  List<List<Note>> arrList = [];
+  List<Note> temp = [];
+  if (list.isNotEmpty) {
+    for (var i = 0; i < list.length - 1; i++) {
+      temp.add(list[i]);
+      if (list[i + 1].date.toUtc() != list[i].date.toUtc()) {
+        arrList.add(temp);
+        temp.clear();
+      }
+    }
+    temp.add(list[list.length - 1]);
+    arrList.add(temp);
+  }
+  return arrList;
+}

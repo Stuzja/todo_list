@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:todo_list/widgets/dialogs/addnote_dialog.dart';
 import 'package:todo_list/widgets/list_notes.dart';
-import 'package:todo_list/widgets/week_widget.dart';
+import 'functions.dart';
 import 'note_widget.dart';
 
 class NotesWidget extends StatefulWidget {
@@ -44,10 +45,22 @@ class NotesWidgetState extends State<NotesWidget> {
                       style: Theme.of(context).textTheme.headline1,
                     ),
                     Wrap(
-                      //////////////////////////////////////////////////////////////////////////////
                       runSpacing: MediaQuery.of(context).size.height * 0.01,
-                      children: <Widget>[
-                        WeekWidget(refreshFunc: refresh),
+                      children: [
+                        for (var arr in listDivider(listWaiting))
+                          Column(children: [
+                            Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                    DateFormat.MMMMEEEEd()
+                                        .format(arr.first.date),
+                                    style: const TextStyle(fontSize: 23))),
+                            for (var elem in arr)
+                              NoteWidget(
+                                note: elem,
+                                refreshFunc: refresh,
+                              ),
+                          ]),
                         Text(
                           "Завершенные:",
                           style: Theme.of(context).textTheme.headline1,
