@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import 'deletenote_dialog.dart';
+
 class Note extends StatefulWidget {
   String title;
   String text;
@@ -62,42 +64,18 @@ class NoteState extends State<Note> {
                   icon: const Icon(Icons.edit_outlined)),
               IconButton(
                   onPressed: () {
-                    _displayDeleteDialog(context, widget.id, widget.deleteFunc);
+                    setState(() {
+                      showDialog(
+                        context: context,
+                        builder: (_) => DeleteNoteDialog(
+                            id: widget.id, deleteFunc: widget.deleteFunc),
+                      );
+                    });
                   },
                   icon: const Icon(Icons.delete_outline_outlined))
             ],
           )
         ]));
-  }
-
-//Диалог при удалении задачи
-  Future<void> _displayDeleteDialog(
-      BuildContext context, int id, void Function(int) delete) async {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text('Удаление задачи'),
-            content: const Text("Вы действительно хотите удалить эту задачу?"),
-            actions: <Widget>[
-              ElevatedButton(
-                child: const Text('Отмена'),
-                onPressed: () {
-                  setState(() {
-                    Navigator.pop(context);
-                  });
-                },
-              ),
-              ElevatedButton(
-                child: const Text('Подтвердить'),
-                onPressed: () {
-                  delete(id);
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          );
-        });
   }
 
 //Диалог при изменении задачи
@@ -168,6 +146,4 @@ class NoteState extends State<Note> {
           );
         });
   }
-
-  
 }

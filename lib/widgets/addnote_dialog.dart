@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'list_notes.dart';
-import 'note.dart';
 
 class AddNoteDialog extends StatefulWidget {
   final void Function(String title, String text, DateTime date) addFunc;
