@@ -1,6 +1,8 @@
 import 'note.dart';
 
-List<Note> ListNotes = [
+int count = 0;
+
+List<Note> listWaiting = [
   Note(
     title: "First",
     text: "lol",
@@ -9,3 +11,5 @@ List<Note> ListNotes = [
     date: DateTime.now(),
   )
 ];
+
+List<Note> listReady = [];

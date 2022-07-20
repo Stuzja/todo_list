@@ -5,39 +5,49 @@ import 'note.dart';
 import 'note_widget.dart';
 
 class NotesWidget extends StatefulWidget {
-  const NotesWidget({Key? key}) : super(key: key);
-
+  NotesWidget({Key? key}) : super(key: key);
   @override
   createState() => NotesWidgetState();
 }
 
 class NotesWidgetState extends State<NotesWidget> {
+  refresh(void Function() func) {
+    setState(() {
+      func();
+    });
+  }
+
   //Процедура удаления и обновления родительского состояния(передаю в дочерний виджет самой задачи)
   addNote(String title, String text, DateTime date) {
     setState(() {
-      ListNotes.add(Note(
+      listWaiting.add(Note(
         title: title,
         text: text,
         completed: false,
-        id: ListNotes.length,
+        id: count + 1,
         date: date,
       ));
+      count++;
     });
   }
 
   //Я хз как это можно было иначе сделать~~~
   deleteNote(int id) {
     setState(() {
-      ListNotes.removeAt(id);
+      if (listWaiting.where((element) => element.id == id).isNotEmpty) {
+        listWaiting.removeWhere((element) => element.id == id);
+      } else {
+        listReady.removeWhere((element) => element.id == id);
+      }
     });
   }
 
   //Процедура редактирования и обновления
   editNote(int id, String title, String text, DateTime date) {
     setState(() {
-       ListNotes[id].title = title;
-       ListNotes[id].text = text;
-       ListNotes[id].date = date;
+      listWaiting[id].title = title;
+      listWaiting[id].text = text;
+      listWaiting[id].date = date;
     });
   }
 
@@ -64,11 +74,23 @@ class NotesWidgetState extends State<NotesWidget> {
                     Wrap(
                       runSpacing: MediaQuery.of(context).size.height * 0.01,
                       children: <Widget>[
-                        for (var elem in ListNotes)
+                        for (var elem in listWaiting)
                           NoteWidget(
                             note: elem,
                             deleteFunc: deleteNote,
                             editFunc: editNote,
+                            refreshFunc: refresh,
+                          ),
+                        Text(
+                          "Завершенные:",
+                          style: Theme.of(context).textTheme.headline1,
+                        ),
+                        for (var elem in listReady)
+                          NoteWidget(
+                            note: elem,
+                            deleteFunc: deleteNote,
+                            editFunc: editNote,
+                            refreshFunc: refresh,
                           ),
                       ],
                     ),
