@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:todo_list/widgets/list_notes.dart';
 import 'package:todo_list/widgets/notes_widget.dart';
 
 void main() {
@@ -60,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return Scaffold(
+    return const Scaffold(
       body: NotesWidget(),
     );
   }

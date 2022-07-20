@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
 import '../functions.dart';
-import '../list_notes.dart';
+
 
 class DeleteNoteDialog extends StatefulWidget {
   final int id;

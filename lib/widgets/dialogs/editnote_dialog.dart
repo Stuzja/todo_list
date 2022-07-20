@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../functions.dart';
 
+// ignore: must_be_immutable
 class EditNoteDialog extends StatefulWidget {
   final int id;
   String title;

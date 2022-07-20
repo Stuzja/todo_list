@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list/widgets/dialogs/addnote_dialog.dart';
 import 'package:todo_list/widgets/list_notes.dart';
-import 'functions.dart';
-import 'note.dart';
+import 'package:todo_list/widgets/week_widget.dart';
 import 'note_widget.dart';
 
 class NotesWidget extends StatefulWidget {
-  NotesWidget({Key? key}) : super(key: key);
+  const NotesWidget({Key? key}) : super(key: key);
   @override
   createState() => NotesWidgetState();
 }
@@ -15,6 +14,12 @@ class NotesWidgetState extends State<NotesWidget> {
   refresh(void Function() func) {
     setState(() {
       func();
+      listWaiting.sort(
+        (a, b) => a.date.compareTo(b.date),
+      );
+      listReady.sort(
+        (a, b) => a.date.compareTo(b.date),
+      );
     });
   }
 
@@ -39,13 +44,10 @@ class NotesWidgetState extends State<NotesWidget> {
                       style: Theme.of(context).textTheme.headline1,
                     ),
                     Wrap(
+                      //////////////////////////////////////////////////////////////////////////////
                       runSpacing: MediaQuery.of(context).size.height * 0.01,
                       children: <Widget>[
-                        for (var elem in listWaiting)
-                          NoteWidget(
-                            note: elem,
-                            refreshFunc: refresh,
-                          ),
+                        WeekWidget(refreshFunc: refresh),
                         Text(
                           "Завершенные:",
                           style: Theme.of(context).textTheme.headline1,
@@ -60,11 +62,11 @@ class NotesWidgetState extends State<NotesWidget> {
                     IconButton(
                         onPressed: () {
                           setState(() {
-                          
-                          showDialog(
-                            context: context,
-                            builder: (_) => AddNoteDialog(refreshFunc: refresh),
-                          );
+                            showDialog(
+                              context: context,
+                              builder: (_) =>
+                                  AddNoteDialog(refreshFunc: refresh),
+                            );
                           });
                         },
                         icon: const Icon(Icons.add_circle_outline))
