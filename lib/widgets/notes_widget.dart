@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_list/widgets/colors.dart';
 import 'package:todo_list/widgets/dialogs/addnote_dialog.dart';
 import 'package:todo_list/widgets/list_notes.dart';
 import 'functions.dart';
@@ -36,14 +37,15 @@ class NotesWidgetState extends State<NotesWidget> {
                 alignment: Alignment.center,
                 child: Column(
                   children: [
-                    Text(
-                      "~To Do List~",
-                      style: Theme.of(context).textTheme.headline1,
-                    ),
                     Wrap(
                       runSpacing: MediaQuery.of(context).size.height * 0.02,
                       children: [
+                        Text("Нужно выполнить:",
+                            style: Theme.of(context).textTheme.headline1),
                         for (var arr in listDivider(listWaiting))
+                        Container(
+                          color: back,
+                          child:
                           Wrap(
                               runSpacing:
                                   MediaQuery.of(context).size.height * 0.02,
@@ -53,22 +55,28 @@ class NotesWidgetState extends State<NotesWidget> {
                                     child: Text(
                                         DateFormat.MMMMEEEEd()
                                             .format(arr.first.date),
-                                        style: const TextStyle(fontSize: 23))),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline2)),
                                 for (var elem in arr)
                                   NoteWidget(
                                     note: elem,
                                     refreshFunc: refresh,
                                   ),
                               ]),
+                        ),
                         Text(
                           "Завершенные:",
                           style: Theme.of(context).textTheme.headline1,
                         ),
                         for (var elem in listReady)
-                          NoteWidget(
-                            note: elem,
-                            refreshFunc: refresh,
-                          ),
+                          Opacity(
+                            opacity: 0.7,
+                            child: NoteWidget(
+                              note: elem,
+                              refreshFunc: refresh,
+                            ),
+                          )
                       ],
                     ),
                     IconButton(

@@ -15,11 +15,11 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
           textTheme: const TextTheme(
-            headline1: TextStyle(
-                fontSize: 35,
-                fontFamily: "LemonTuesday",
-                color: Colors.black87),
-          )),
+        headline1: TextStyle(
+            fontSize: 35, fontFamily: "LemonTuesday", color: Colors.black87),
+        headline2: TextStyle(
+            fontSize: 27, fontFamily: "Parabola", color: Colors.black87),
+      )),
       home: const MyHomePage(),
     );
   }
