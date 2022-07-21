@@ -29,13 +29,22 @@ class NoteWidgetState extends State<NoteWidget> {
           Row(
             children: [
               if (widget.note.priority == Priority.low)
-                SizedBox(height: 30, width: 30, child: Image.asset("assets/images/yellow1.png")),
+                SizedBox(
+                    height: 30,
+                    width: 30,
+                    child: Image.asset("assets/images/yellow1.png")),
               if (widget.note.priority == Priority.medium)
-                SizedBox(height: 30, width: 30, child: Image.asset("assets/images/blue4.png")),
+                SizedBox(
+                    height: 30,
+                    width: 30,
+                    child: Image.asset("assets/images/blue4.png")),
               if (widget.note.priority == Priority.high)
-                SizedBox(height: 30, width: 30, child: Image.asset("assets/images/red11.png")),
-       Text(widget.note.title,
-                      style: Theme.of(context).textTheme.headline3),
+                SizedBox(
+                    height: 30,
+                    width: 30,
+                    child: Image.asset("assets/images/red11.png")),
+              Text(widget.note.title,
+                  style: Theme.of(context).textTheme.headline3),
               IconButton(
                   onPressed: () {
                     widget.refreshFunc(() => setState(() {

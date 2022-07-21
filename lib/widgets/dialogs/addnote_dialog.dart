@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:todo_list/widgets/note.dart';
 
+import '../colors.dart';
 import '../functions.dart';
 
 class AddNoteDialog extends StatefulWidget {
@@ -18,11 +19,15 @@ class AddNoteDialogState extends State<AddNoteDialog> {
   DateTime date =
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
   Priority priority = Priority.medium;
-
+  bool wasTap1 = false;
+  bool wasTap2 = false;
+  bool wasTap3 = false;
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Добавление задачи'),
+      title: Center(
+          child: Text('Добавление задачи',
+              style: Theme.of(context).textTheme.headline1)),
       content: SingleChildScrollView(
           child: Wrap(runSpacing: 2, children: [
         const Text("Введите название:"),
@@ -35,7 +40,7 @@ class AddNoteDialogState extends State<AddNoteDialog> {
         ),
         const Text("Введите описание:"),
         TextFormField(
-          maxLines: 2,
+          maxLines: 3,
           onChanged: (value) {
             setState(() {
               text = value;
@@ -58,27 +63,59 @@ class AddNoteDialogState extends State<AddNoteDialog> {
         ),
         const Text("Выберите приоритет выполнения:"),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            IconButton(
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: wasTap1 ? lightGrey : lightBlue),
                 onPressed: () {
-                  priority = Priority.low;
+                  setState(() {
+                    priority = Priority.low;
+                    wasTap1 = true;
+                    wasTap2 = false;
+                    wasTap3 = false;
+                  });
                 },
-                icon: const Icon(Icons.square)),
-            IconButton(
+                child: SizedBox(
+                    height: 30,
+                    width: 30,
+                    child: Image.asset("assets/images/yellow1.png"))),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: wasTap2 ? lightGrey : lightBlue),
                 onPressed: () {
-                  priority = Priority.medium;
+                  setState(() {
+                    priority = Priority.medium;
+                    wasTap2 = true;
+                    wasTap1 = false;
+                    wasTap3 = false;
+                  });
                 },
-                icon: const Icon(Icons.square)),
-            IconButton(
+                child: SizedBox(
+                    height: 30,
+                    width: 30,
+                    child: Image.asset("assets/images/blue4.png"))),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: wasTap3 ? lightGrey : lightBlue),
                 onPressed: () {
-                  priority = Priority.high;
+                  setState(() {
+                    priority = Priority.high;
+                    wasTap3 = true;
+                    wasTap1 = false;
+                    wasTap2 = false;
+                  });
                 },
-                icon: const Icon(Icons.square)),
+                child: SizedBox(
+                    height: 30,
+                    width: 30,
+                    child: Image.asset("assets/images/red11.png"))),
           ],
         )
       ])),
       actions: <Widget>[
         ElevatedButton(
+          style: ElevatedButton.styleFrom(primary: buttonBlue),
           child: const Text('Отмена'),
           onPressed: () {
             setState(() {
@@ -87,6 +124,7 @@ class AddNoteDialogState extends State<AddNoteDialog> {
           },
         ),
         ElevatedButton(
+          style: ElevatedButton.styleFrom(primary: buttonBlue),
           child: const Text('Подтвердить'),
           onPressed: () {
             widget.refreshFunc(() => addNote(title, text, date, priority));

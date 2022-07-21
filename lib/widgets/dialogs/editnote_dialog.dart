@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../colors.dart';
 import '../functions.dart';
 import '../note.dart';
 
@@ -33,9 +34,13 @@ class EditNoteDialogState extends State<EditNoteDialog> {
     textControllerTitle.text = widget.title;
     var textControllerText = TextEditingController();
     textControllerText.text = widget.text;
-
+    bool wasTap1 = widget.priority == Priority.low;
+    bool wasTap2 = widget.priority == Priority.medium;
+    bool wasTap3 = widget.priority == Priority.high;
     return AlertDialog(
-      title: const Text('Изменение задачи'),
+      title: Center(
+          child: Text('Изменение задачи',
+              style: Theme.of(context).textTheme.headline1)),
       content: SingleChildScrollView(
           child: Wrap(runSpacing: 2, children: [
         const Text("Введите название:"),
@@ -49,7 +54,7 @@ class EditNoteDialogState extends State<EditNoteDialog> {
         ),
         const Text("Введите описание:"),
         TextFormField(
-          maxLines: 2,
+          maxLines: 3,
           controller: textControllerText,
           onChanged: (value) {
             setState(() {
@@ -71,27 +76,59 @@ class EditNoteDialogState extends State<EditNoteDialog> {
         ),
         const Text("Выберите приоритет выполнения:"),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            IconButton(
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: wasTap1 ? lightGrey : lightBlue),
                 onPressed: () {
-                  widget.priority = Priority.low;
+                  setState(() {
+                    widget.priority = Priority.low;
+                    wasTap1 = true;
+                    wasTap2 = false;
+                    wasTap3 = false;
+                  });
                 },
-                icon: const Icon(Icons.square)),
-            IconButton(
+                child: SizedBox(
+                    height: 30,
+                    width: 30,
+                    child: Image.asset("assets/images/yellow1.png"))),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: wasTap2 ? lightGrey : lightBlue),
                 onPressed: () {
-                  widget.priority = Priority.medium;
+                  setState(() {
+                    widget.priority = Priority.medium;
+                    wasTap2 = true;
+                    wasTap1 = false;
+                    wasTap3 = false;
+                  });
                 },
-                icon: const Icon(Icons.square)),
-            IconButton(
+                child: SizedBox(
+                    height: 30,
+                    width: 30,
+                    child: Image.asset("assets/images/blue4.png"))),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: wasTap3 ? lightGrey : lightBlue),
                 onPressed: () {
-                  widget.priority = Priority.high;
+                  setState(() {
+                    widget.priority = Priority.high;
+                    wasTap3 = true;
+                    wasTap1 = false;
+                    wasTap2 = false;
+                  });
                 },
-                icon: const Icon(Icons.square)),
+                child: SizedBox(
+                    height: 30,
+                    width: 30,
+                    child: Image.asset("assets/images/red11.png"))),
           ],
         )
       ])),
       actions: <Widget>[
         ElevatedButton(
+          style: ElevatedButton.styleFrom(primary: buttonBlue),
           child: const Text('Отмена'),
           onPressed: () {
             setState(() {
@@ -100,6 +137,7 @@ class EditNoteDialogState extends State<EditNoteDialog> {
           },
         ),
         ElevatedButton(
+          style: ElevatedButton.styleFrom(primary: buttonBlue),
           child: const Text('Подтвердить'),
           onPressed: () {
             widget.refreshFunc(() => editNote(widget.id, widget.title,

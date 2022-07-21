@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../colors.dart';
 import '../functions.dart';
 
 class DeleteNoteDialog extends StatefulWidget {
@@ -16,10 +17,13 @@ class DeleteNoteDialogState extends State<DeleteNoteDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Удаление задачи'),
+      title: Center(
+          child: Text('Удаление задачи',
+              style: Theme.of(context).textTheme.headline1)),
       content: const Text("Вы действительно хотите удалить эту задачу?"),
       actions: <Widget>[
         ElevatedButton(
+          style: ElevatedButton.styleFrom(primary: buttonBlue),
           child: const Text('Отмена'),
           onPressed: () {
             setState(() {
@@ -28,6 +32,7 @@ class DeleteNoteDialogState extends State<DeleteNoteDialog> {
           },
         ),
         ElevatedButton(
+          style: ElevatedButton.styleFrom(primary: buttonBlue),
           child: const Text('Подтвердить'),
           onPressed: () {
             widget.refreshFunc(() => deleteNote(widget.id));
