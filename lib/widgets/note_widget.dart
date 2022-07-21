@@ -27,6 +27,21 @@ class NoteWidgetState extends State<NoteWidget> {
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(
             children: [
+              if (widget.note.priority == Priority.low)
+                Icon(
+                  Icons.square,
+                  color: Colors.yellow,
+                ),
+              if (widget.note.priority == Priority.medium)
+                Icon(
+                  Icons.square,
+                  color: Colors.blue,
+                ),
+              if (widget.note.priority == Priority.high)
+                Icon(
+                  Icons.square,
+                  color: Colors.red,
+                ),
               Text(widget.note.title),
               const Spacer(),
               IconButton(
@@ -63,6 +78,7 @@ class NoteWidgetState extends State<NoteWidget> {
                             title: widget.note.title,
                             text: widget.note.text,
                             date: widget.note.date,
+                            priority: widget.note.priority,
                             refreshFunc: widget.refreshFunc),
                       );
                     },

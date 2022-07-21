@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../functions.dart';
+import '../note.dart';
 
 // ignore: must_be_immutable
 class EditNoteDialog extends StatefulWidget {
@@ -8,6 +9,7 @@ class EditNoteDialog extends StatefulWidget {
   String title;
   String text;
   DateTime date;
+  Priority priority;
   final void Function(void Function()) refreshFunc;
 
   EditNoteDialog({
@@ -16,6 +18,7 @@ class EditNoteDialog extends StatefulWidget {
     required this.title,
     required this.text,
     required this.date,
+    required this.priority,
     required this.refreshFunc,
   }) : super(key: key);
 
@@ -66,6 +69,26 @@ class EditNoteDialogState extends State<EditNoteDialog> {
             },
           ),
         ),
+        const Text("Выберите приоритет выполнения:"),
+        Row(
+          children: [
+            IconButton(
+                onPressed: () {
+                  widget.priority = Priority.low;
+                },
+                icon: const Icon(Icons.square)),
+            IconButton(
+                onPressed: () {
+                  widget.priority = Priority.medium;
+                },
+                icon: const Icon(Icons.square)),
+            IconButton(
+                onPressed: () {
+                  widget.priority = Priority.high;
+                },
+                icon: const Icon(Icons.square)),
+          ],
+        )
       ])),
       actions: <Widget>[
         ElevatedButton(
@@ -80,7 +103,7 @@ class EditNoteDialogState extends State<EditNoteDialog> {
           child: const Text('Подтвердить'),
           onPressed: () {
             widget.refreshFunc(() =>
-                editNote(widget.id, widget.title, widget.text, widget.date));
+                editNote(widget.id, widget.title, widget.text, widget.date, widget.priority));
             Navigator.pop(context);
           },
         ),
