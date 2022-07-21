@@ -10,10 +10,7 @@ class NoteWidget extends StatefulWidget {
   Note note;
   final void Function(void Function()) refreshFunc;
 
-  NoteWidget(
-      {Key? key,
-      required this.note,
-      required this.refreshFunc})
+  NoteWidget({Key? key, required this.note, required this.refreshFunc})
       : super(key: key);
 
   @override
@@ -75,8 +72,7 @@ class NoteWidgetState extends State<NoteWidget> {
                     showDialog(
                       context: context,
                       builder: (_) => DeleteNoteDialog(
-                          id: widget.note.id,
-                          refreshFunc: widget.refreshFunc),
+                          id: widget.note.id, refreshFunc: widget.refreshFunc),
                     );
                   },
                   icon: const Icon(Icons.delete_outline_outlined))

@@ -14,7 +14,7 @@ class AddNoteDialog extends StatefulWidget {
 class AddNoteDialogState extends State<AddNoteDialog> {
   String title = "";
   String text = "";
-  DateTime date = DateTime.now();
+  DateTime date = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +44,8 @@ class AddNoteDialogState extends State<AddNoteDialog> {
           height: 200,
           child: CupertinoDatePicker(
             mode: CupertinoDatePickerMode.date,
-            initialDateTime: DateTime.now(),
-            minimumDate: DateTime.now(),
+            initialDateTime:  DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
+            minimumDate:  DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
             onDateTimeChanged: (DateTime newDateTime) {
               date = newDateTime;
             },

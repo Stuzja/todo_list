@@ -33,9 +33,9 @@ List<List<Note>> listDivider(List<Note> list) {
   if (list.isNotEmpty) {
     for (var i = 0; i < list.length - 1; i++) {
       temp.add(list[i]);
-      if (list[i + 1].date.toUtc() != list[i].date.toUtc()) {
+      if (!list[i].date.isAtSameMomentAs(list[i + 1].date)) {
         arrList.add(temp);
-        temp.clear();
+        temp = [];
       }
     }
     temp.add(list[list.length - 1]);
