@@ -28,17 +28,17 @@ class NoteWidgetState extends State<NoteWidget> {
           Row(
             children: [
               if (widget.note.priority == Priority.low)
-                Icon(
+                const Icon(
                   Icons.square,
                   color: Colors.yellow,
                 ),
               if (widget.note.priority == Priority.medium)
-                Icon(
+                const Icon(
                   Icons.square,
                   color: Colors.blue,
                 ),
               if (widget.note.priority == Priority.high)
-                Icon(
+                const Icon(
                   Icons.square,
                   color: Colors.red,
                 ),

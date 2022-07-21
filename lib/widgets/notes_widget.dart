@@ -15,12 +15,8 @@ class NotesWidgetState extends State<NotesWidget> {
   refresh(void Function() func) {
     setState(() {
       func();
-      listWaiting.sort(
-        (a, b) => a.date.compareTo(b.date),
-      );
-      listReady.sort(
-        (a, b) => a.date.compareTo(b.date),
-      );
+      listWaiting.sort();
+      listReady.sort();
     });
   }
 
@@ -45,22 +41,25 @@ class NotesWidgetState extends State<NotesWidget> {
                       style: Theme.of(context).textTheme.headline1,
                     ),
                     Wrap(
-                      runSpacing: MediaQuery.of(context).size.height * 0.01,
+                      runSpacing: MediaQuery.of(context).size.height * 0.02,
                       children: [
                         for (var arr in listDivider(listWaiting))
-                          Column(children: [
-                            Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                    DateFormat.MMMMEEEEd()
-                                        .format(arr.first.date),
-                                    style: const TextStyle(fontSize: 23))),
-                            for (var elem in arr)
-                              NoteWidget(
-                                note: elem,
-                                refreshFunc: refresh,
-                              ),
-                          ]),
+                          Wrap(
+                              runSpacing:
+                                  MediaQuery.of(context).size.height * 0.02,
+                              children: [
+                                Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                        DateFormat.MMMMEEEEd()
+                                            .format(arr.first.date),
+                                        style: const TextStyle(fontSize: 23))),
+                                for (var elem in arr)
+                                  NoteWidget(
+                                    note: elem,
+                                    refreshFunc: refresh,
+                                  ),
+                              ]),
                         Text(
                           "Завершенные:",
                           style: Theme.of(context).textTheme.headline1,

@@ -102,8 +102,8 @@ class EditNoteDialogState extends State<EditNoteDialog> {
         ElevatedButton(
           child: const Text('Подтвердить'),
           onPressed: () {
-            widget.refreshFunc(() =>
-                editNote(widget.id, widget.title, widget.text, widget.date, widget.priority));
+            widget.refreshFunc(() => editNote(widget.id, widget.title,
+                widget.text, widget.date, widget.priority));
             Navigator.pop(context);
           },
         ),

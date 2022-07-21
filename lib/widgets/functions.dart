@@ -3,13 +3,12 @@ import 'note.dart';
 
 addNote(String title, String text, DateTime date, Priority priority) {
   listWaiting.add(Note(
-    title: title,
-    text: text,
-    completed: false,
-    id: count + 1,
-    date: date,
-    priority: priority
-  ));
+      title: title,
+      text: text,
+      completed: false,
+      id: count + 1,
+      date: date,
+      priority: priority));
   count++;
 }
 
@@ -26,7 +25,7 @@ editNote(int id, String title, String text, DateTime date, Priority priority) {
   listWaiting[index].title = title;
   listWaiting[index].text = text;
   listWaiting[index].date = date;
-   listWaiting[index].priority = priority;
+  listWaiting[index].priority = priority;
 }
 
 List<List<Note>> listDivider(List<Note> list) {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../functions.dart';
 
-
 class DeleteNoteDialog extends StatefulWidget {
   final int id;
   final void Function(void Function()) refreshFunc;
