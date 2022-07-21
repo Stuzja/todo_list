@@ -42,9 +42,10 @@ class EditNoteDialogState extends State<EditNoteDialog> {
           child: Text('Изменение задачи',
               style: Theme.of(context).textTheme.headline1)),
       content: SingleChildScrollView(
-          child: Wrap(runSpacing: 2, children: [
-        const Text("Введите название:"),
+          child: Wrap(runSpacing: 4, children: [
+        Text("Введите название:", style: Theme.of(context).textTheme.bodyText2),
         TextFormField(
+          style: Theme.of(context).textTheme.headline3,
           controller: textControllerTitle,
           onChanged: (value) {
             setState(() {
@@ -52,9 +53,10 @@ class EditNoteDialogState extends State<EditNoteDialog> {
             });
           },
         ),
-        const Text("Введите описание:"),
+        Text("Введите описание:", style: Theme.of(context).textTheme.bodyText2),
         TextFormField(
           maxLines: 3,
+          style: Theme.of(context).textTheme.bodyText1,
           controller: textControllerText,
           onChanged: (value) {
             setState(() {
@@ -62,7 +64,7 @@ class EditNoteDialogState extends State<EditNoteDialog> {
             });
           },
         ),
-        const Text("Введите дату:"),
+        Text("Введите дату:", style: Theme.of(context).textTheme.bodyText2),
         SizedBox(
           height: 200,
           child: CupertinoDatePicker(
@@ -74,7 +76,8 @@ class EditNoteDialogState extends State<EditNoteDialog> {
             },
           ),
         ),
-        const Text("Выберите приоритет выполнения:"),
+        Text("Выберите приоритет выполнения:",
+            style: Theme.of(context).textTheme.bodyText2),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [

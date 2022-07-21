@@ -43,8 +43,11 @@ class NoteWidgetState extends State<NoteWidget> {
                     height: 30,
                     width: 30,
                     child: Image.asset("assets/images/red11.png")),
-              Text(widget.note.title,
-                  style: Theme.of(context).textTheme.headline3),
+              SizedBox(
+                  width: MediaQuery.of(context).size.width -138,
+                  child: Text(widget.note.title,
+                      style: Theme.of(context).textTheme.headline3)),
+              const Spacer(),
               IconButton(
                   onPressed: () {
                     widget.refreshFunc(() => setState(() {

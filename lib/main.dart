@@ -24,23 +24,27 @@ class MyApp extends StatelessWidget {
           shadows: [
             Shadow(
               blurRadius: 8,
-               color: Colors.lightBlue,
-               offset: Offset(-2.0, 1.0),
+              color: Colors.lightBlue,
+              offset: Offset(-2.0, 1.0),
             ),
           ],
         ),
         headline2: TextStyle(
             fontSize: 27, fontFamily: "Parabola", color: Colors.black87),
         headline3: TextStyle(
+            fontSize: 16,
+            fontFamily: "MullerNarrow",
+            color: Colors.black87,
+            fontWeight: FontWeight.w500),
+        bodyText1: TextStyle(
             fontSize: 15,
             fontFamily: "MullerNarrow",
             color: Colors.black87,
-            fontWeight: FontWeight.w400),
-        bodyText1: TextStyle(
-            fontSize: 14,
-            fontFamily: "MullerNarrow",
+            fontWeight: FontWeight.w500),
+        bodyText2: TextStyle(
+            fontSize: 16,
             color: Colors.black87,
-            fontWeight: FontWeight.w400),
+            fontWeight: FontWeight.w600),
       )),
       home: const MyHomePage(),
     );

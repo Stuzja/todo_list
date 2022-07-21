@@ -29,25 +29,27 @@ class AddNoteDialogState extends State<AddNoteDialog> {
           child: Text('Добавление задачи',
               style: Theme.of(context).textTheme.headline1)),
       content: SingleChildScrollView(
-          child: Wrap(runSpacing: 2, children: [
-        const Text("Введите название:"),
+          child: Wrap(runSpacing: 4, children: [
+        Text("Введите название:", style: Theme.of(context).textTheme.bodyText2),
         TextFormField(
+          style: Theme.of(context).textTheme.headline3,
           onChanged: (value) {
             setState(() {
               title = value;
             });
           },
         ),
-        const Text("Введите описание:"),
+        Text("Введите описание:", style: Theme.of(context).textTheme.bodyText2),
         TextFormField(
           maxLines: 3,
+          style: Theme.of(context).textTheme.bodyText1,
           onChanged: (value) {
             setState(() {
               text = value;
             });
           },
         ),
-        const Text("Введите дату:"),
+        Text("Введите дату:", style: Theme.of(context).textTheme.bodyText2),
         SizedBox(
           height: 200,
           child: CupertinoDatePicker(
@@ -61,7 +63,8 @@ class AddNoteDialogState extends State<AddNoteDialog> {
             },
           ),
         ),
-        const Text("Выберите приоритет выполнения:"),
+        Text("Выберите приоритет выполнения:",
+            style: Theme.of(context).textTheme.bodyText2),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
