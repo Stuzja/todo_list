@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list/widgets/colors.dart';
 import 'package:todo_list/widgets/notes_widget.dart';
 
 void main() {
@@ -16,9 +17,30 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           textTheme: const TextTheme(
         headline1: TextStyle(
-            fontSize: 35, fontFamily: "LemonTuesday", color: Colors.black87),
+          fontSize: 35,
+          fontFamily: "LemonTuesday",
+          color: Colors.black87,
+          fontWeight: FontWeight.w500,
+          shadows: [
+            Shadow(
+              blurRadius: 8,
+               color: Colors.lightBlue,
+               offset: Offset(-2.0, 1.0),
+            ),
+          ],
+        ),
         headline2: TextStyle(
             fontSize: 27, fontFamily: "Parabola", color: Colors.black87),
+        headline3: TextStyle(
+            fontSize: 15,
+            fontFamily: "MullerNarrow",
+            color: Colors.black87,
+            fontWeight: FontWeight.w400),
+        bodyText1: TextStyle(
+            fontSize: 14,
+            fontFamily: "MullerNarrow",
+            color: Colors.black87,
+            fontWeight: FontWeight.w400),
       )),
       home: const MyHomePage(),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_list/widgets/colors.dart';
 import 'package:todo_list/widgets/list_notes.dart';
 import 'dialogs/deletenote_dialog.dart';
 import 'dialogs/editnote_dialog.dart';
@@ -28,22 +29,13 @@ class NoteWidgetState extends State<NoteWidget> {
           Row(
             children: [
               if (widget.note.priority == Priority.low)
-                const Icon(
-                  Icons.square,
-                  color: Colors.yellow,
-                ),
+                SizedBox(height: 30, width: 30, child: Image.asset("assets/images/yellow1.png")),
               if (widget.note.priority == Priority.medium)
-                const Icon(
-                  Icons.square,
-                  color: Colors.blue,
-                ),
+                SizedBox(height: 30, width: 30, child: Image.asset("assets/images/blue4.png")),
               if (widget.note.priority == Priority.high)
-                const Icon(
-                  Icons.square,
-                  color: Colors.red,
-                ),
-              Text(widget.note.title),
-              const Spacer(),
+                SizedBox(height: 30, width: 30, child: Image.asset("assets/images/red11.png")),
+       Text(widget.note.title,
+                      style: Theme.of(context).textTheme.headline3),
               IconButton(
                   onPressed: () {
                     widget.refreshFunc(() => setState(() {
@@ -58,12 +50,12 @@ class NoteWidgetState extends State<NoteWidget> {
                         }));
                   },
                   icon: widget.note.completed
-                      ? const Icon(Icons.check_circle_outlined)
-                      : const Icon(Icons.circle_outlined))
+                      ? const Icon(Icons.check_circle_outlined, color: beige)
+                      : const Icon(Icons.circle_outlined, color: beige))
             ],
           ),
           const Divider(),
-          Text(widget.note.text),
+          Text(widget.note.text, style: Theme.of(context).textTheme.bodyText1),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -82,7 +74,7 @@ class NoteWidgetState extends State<NoteWidget> {
                             refreshFunc: widget.refreshFunc),
                       );
                     },
-                    icon: const Icon(Icons.edit_outlined)),
+                    icon: const Icon(Icons.edit_outlined, color: beige)),
               IconButton(
                   onPressed: () {
                     showDialog(
@@ -91,7 +83,7 @@ class NoteWidgetState extends State<NoteWidget> {
                           id: widget.note.id, refreshFunc: widget.refreshFunc),
                     );
                   },
-                  icon: const Icon(Icons.delete_outline_outlined))
+                  icon: const Icon(Icons.delete_outline_outlined, color: beige))
             ],
           )
         ]));

@@ -17,7 +17,6 @@ class NotesWidgetState extends State<NotesWidget> {
     setState(() {
       func();
       listWaiting.sort();
-      listReady.sort();
     });
   }
 
@@ -28,57 +27,59 @@ class NotesWidgetState extends State<NotesWidget> {
         Container(
             decoration: BoxDecoration(
                 image: DecorationImage(
+                    opacity: 0.9,
                     image: Image.asset("assets/images/background.jpg").image,
                     fit: BoxFit.fill))),
         SingleChildScrollView(
             child: Container(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 22, vertical: 22),
+                    const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
                 alignment: Alignment.center,
                 child: Column(
                   children: [
                     Wrap(
-                      runSpacing: MediaQuery.of(context).size.height * 0.02,
-                      children: [
-                        Text("Нужно выполнить:",
-                            style: Theme.of(context).textTheme.headline1),
-                        for (var arr in listDivider(listWaiting))
-                        Container(
-                          color: back,
-                          child:
-                          Wrap(
-                              runSpacing:
-                                  MediaQuery.of(context).size.height * 0.02,
-                              children: [
-                                Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                        DateFormat.MMMMEEEEd()
-                                            .format(arr.first.date),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline2)),
-                                for (var elem in arr)
-                                  NoteWidget(
-                                    note: elem,
-                                    refreshFunc: refresh,
-                                  ),
-                              ]),
-                        ),
-                        Text(
-                          "Завершенные:",
-                          style: Theme.of(context).textTheme.headline1,
-                        ),
-                        for (var elem in listReady)
-                          Opacity(
-                            opacity: 0.7,
-                            child: NoteWidget(
-                              note: elem,
-                              refreshFunc: refresh,
+                        alignment: WrapAlignment.center,
+                        runSpacing: MediaQuery.of(context).size.height * 0.01,
+                        children: [
+                          Text("Нужно выполнить:",
+                              style: Theme.of(context).textTheme.headline1),
+                          for (var arr in listDivider(listWaiting))
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 5, vertical: 3),
+                              color: back,
+                              child: Wrap(
+                                  runSpacing:
+                                      MediaQuery.of(context).size.height * 0.01,
+                                  children: [
+                                    Align(
+                                        alignment: Alignment.bottomLeft,
+                                        child: Text(
+                                            DateFormat.MMMMEEEEd()
+                                                .format(arr.first.date),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline2)),
+                                    for (var elem in arr)
+                                      NoteWidget(
+                                        note: elem,
+                                        refreshFunc: refresh,
+                                      ),
+                                  ]),
                             ),
-                          )
-                      ],
-                    ),
+                          Text(
+                            "Завершенные:",
+                            style: Theme.of(context).textTheme.headline1,
+                          ),
+                          for (var elem in listReady)
+                            Opacity(
+                              opacity: 0.7,
+                              child: NoteWidget(
+                                note: elem,
+                                refreshFunc: refresh,
+                              ),
+                            ),
+                        ]),
                     IconButton(
                         onPressed: () {
                           setState(() {
