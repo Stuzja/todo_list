@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../colors.dart';
 import '../functions.dart';
 import '../note.dart';
@@ -37,6 +38,7 @@ class EditNoteDialogState extends State<EditNoteDialog> {
     bool wasTap1 = widget.priority == Priority.low;
     bool wasTap2 = widget.priority == Priority.medium;
     bool wasTap3 = widget.priority == Priority.high;
+    bool wasTapCalendar = true;
     return AlertDialog(
       title: Center(
           child: Text('Изменение задачи',
@@ -64,18 +66,27 @@ class EditNoteDialogState extends State<EditNoteDialog> {
             });
           },
         ),
-        Text("Введите дату:", style: Theme.of(context).textTheme.bodyText2),
-        SizedBox(
-          height: 200,
-          child: CupertinoDatePicker(
-            mode: CupertinoDatePickerMode.date,
-            initialDateTime: DateTime.now(),
-            minimumDate: DateTime.now(),
-            onDateTimeChanged: (DateTime newDateTime) {
-              widget.date = newDateTime;
-            },
-          ),
-        ),
+        Center(
+            child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: lightGrey,
+                    minimumSize:
+                        Size(MediaQuery.of(context).size.width - 44, 40),
+                    textStyle: Theme.of(context).textTheme.bodyText2),
+                child: Text(DateFormat("yyyy-MM-dd").format(widget.date)),
+                onPressed: () async {
+                  DateTime? newDate = await showDatePicker(
+                      context: context,
+                      initialDate: widget.date,
+                      firstDate: DateTime(DateTime.now().year,
+                          DateTime.now().month, DateTime.now().day),
+                      lastDate: DateTime(2100));
+                  if (newDate == null) return;
+                  setState(() {
+                    widget.date = newDate;
+                    wasTapCalendar = true;
+                  });
+                })),
         Text("Выберите приоритет выполнения:",
             style: Theme.of(context).textTheme.bodyText2),
         Row(

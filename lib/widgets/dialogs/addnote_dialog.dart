@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'package:todo_list/widgets/note.dart';
 
 import '../colors.dart';
@@ -20,8 +21,9 @@ class AddNoteDialogState extends State<AddNoteDialog> {
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
   Priority priority = Priority.medium;
   bool wasTap1 = false;
-  bool wasTap2 = false;
+  bool wasTap2 = true;
   bool wasTap3 = false;
+  bool wasTapCalendar = false;
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -49,20 +51,29 @@ class AddNoteDialogState extends State<AddNoteDialog> {
             });
           },
         ),
-        Text("Введите дату:", style: Theme.of(context).textTheme.bodyText2),
-        SizedBox(
-          height: 200,
-          child: CupertinoDatePicker(
-            mode: CupertinoDatePickerMode.date,
-            initialDateTime: DateTime(
-                DateTime.now().year, DateTime.now().month, DateTime.now().day),
-            minimumDate: DateTime(
-                DateTime.now().year, DateTime.now().month, DateTime.now().day),
-            onDateTimeChanged: (DateTime newDateTime) {
-              date = newDateTime;
-            },
-          ),
-        ),
+        Center(
+            child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: wasTapCalendar ? lightGrey : lightBlue,
+                    minimumSize:
+                        Size(MediaQuery.of(context).size.width - 44, 40),
+                    textStyle: Theme.of(context).textTheme.bodyText2),
+                child: wasTapCalendar
+                    ? Text(DateFormat("yyyy-MM-dd").format(date))
+                    : const Text("Введите дату"),
+                onPressed: () async {
+                  DateTime? newDate = await showDatePicker(
+                      context: context,
+                      initialDate: date,
+                      firstDate: DateTime(DateTime.now().year,
+                          DateTime.now().month, DateTime.now().day),
+                      lastDate: DateTime(2100));
+                  if (newDate == null) return;
+                  setState(() {
+                    date = newDate;
+                    wasTapCalendar = true;
+                  });
+                })),
         Text("Выберите приоритет выполнения:",
             style: Theme.of(context).textTheme.bodyText2),
         Row(
