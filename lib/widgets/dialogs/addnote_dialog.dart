@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_list/widgets/dialogs/date_picker.dart';
 import 'package:todo_list/widgets/note.dart';
 
 import '../colors.dart';
@@ -24,6 +25,13 @@ class AddNoteDialogState extends State<AddNoteDialog> {
   bool wasTap2 = true;
   bool wasTap3 = false;
   bool wasTapCalendar = false;
+
+  void refresh(void Function() func) {
+    setState(() {
+      func;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -81,7 +89,7 @@ class AddNoteDialogState extends State<AddNoteDialog> {
           children: [
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    primary: wasTap1 ? lightGrey : lightBlue),
+                    primary: wasTap1 ? lightGrey : buttonBlue),
                 onPressed: () {
                   setState(() {
                     priority = Priority.low;
@@ -96,7 +104,7 @@ class AddNoteDialogState extends State<AddNoteDialog> {
                     child: Image.asset("assets/images/yellow1.png"))),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    primary: wasTap2 ? lightGrey : lightBlue),
+                    primary: wasTap2 ? lightGrey : buttonBlue),
                 onPressed: () {
                   setState(() {
                     priority = Priority.medium;
@@ -111,7 +119,7 @@ class AddNoteDialogState extends State<AddNoteDialog> {
                     child: Image.asset("assets/images/blue4.png"))),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    primary: wasTap3 ? lightGrey : lightBlue),
+                    primary: wasTap3 ? lightGrey : buttonBlue),
                 onPressed: () {
                   setState(() {
                     priority = Priority.high;

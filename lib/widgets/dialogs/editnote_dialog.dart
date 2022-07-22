@@ -94,7 +94,7 @@ class EditNoteDialogState extends State<EditNoteDialog> {
           children: [
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    primary: wasTap1 ? lightGrey : lightBlue),
+                    primary: wasTap1 ? lightGrey : buttonBlue),
                 onPressed: () {
                   setState(() {
                     widget.priority = Priority.low;
@@ -109,7 +109,7 @@ class EditNoteDialogState extends State<EditNoteDialog> {
                     child: Image.asset("assets/images/yellow1.png"))),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    primary: wasTap2 ? lightGrey : lightBlue),
+                    primary: wasTap2 ? lightGrey : buttonBlue),
                 onPressed: () {
                   setState(() {
                     widget.priority = Priority.medium;
@@ -124,7 +124,7 @@ class EditNoteDialogState extends State<EditNoteDialog> {
                     child: Image.asset("assets/images/blue4.png"))),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    primary: wasTap3 ? lightGrey : lightBlue),
+                    primary: wasTap3 ? lightGrey : buttonBlue),
                 onPressed: () {
                   setState(() {
                     widget.priority = Priority.high;

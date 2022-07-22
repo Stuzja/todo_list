@@ -44,26 +44,30 @@ class NoteWidgetState extends State<NoteWidget> {
                     width: 30,
                     child: Image.asset("assets/images/red11.png")),
               SizedBox(
-                  width: MediaQuery.of(context).size.width -138,
+                  width: MediaQuery.of(context).size.width - 128,
                   child: Text(widget.note.title,
                       style: Theme.of(context).textTheme.headline3)),
               const Spacer(),
-              IconButton(
-                  onPressed: () {
-                    widget.refreshFunc(() => setState(() {
-                          if (!widget.note.completed) {
-                            listReady.add(widget.note);
-                            listWaiting.remove(widget.note);
-                          } else {
-                            listWaiting.add(widget.note);
-                            listReady.remove(widget.note);
-                          }
-                          widget.note.completed = !widget.note.completed;
-                        }));
-                  },
-                  icon: widget.note.completed
-                      ? const Icon(Icons.check_circle_outlined, color: beige)
-                      : const Icon(Icons.circle_outlined, color: beige))
+              SizedBox(
+                  width: 30,
+                  height: 30,
+                  child: IconButton(
+                      onPressed: () {
+                        widget.refreshFunc(() => setState(() {
+                              if (!widget.note.completed) {
+                                listReady.add(widget.note);
+                                listWaiting.remove(widget.note);
+                              } else {
+                                listWaiting.add(widget.note);
+                                listReady.remove(widget.note);
+                              }
+                              widget.note.completed = !widget.note.completed;
+                            }));
+                      },
+                      icon: widget.note.completed
+                          ? const Icon(Icons.check_circle_outlined,
+                              color: beige)
+                          : const Icon(Icons.circle_outlined, color: beige)))
             ],
           ),
           const Divider(),

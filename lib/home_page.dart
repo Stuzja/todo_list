@@ -13,6 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
+  
   refresh(void Function() func) {
     setState(() {
       func();
