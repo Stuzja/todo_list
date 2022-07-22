@@ -3,16 +3,16 @@ import 'package:intl/intl.dart';
 import 'package:todo_list/widgets/colors.dart';
 import 'package:todo_list/widgets/dialogs/addnote_dialog.dart';
 import 'package:todo_list/widgets/list_notes.dart';
-import 'functions.dart';
-import 'note_widget.dart';
+import 'widgets/functions.dart';
+import 'widgets/note_widget.dart';
 
-class NotesWidget extends StatefulWidget {
-  const NotesWidget({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
   @override
-  createState() => NotesWidgetState();
+  createState() => HomePageState();
 }
 
-class NotesWidgetState extends State<NotesWidget> {
+class HomePageState extends State<HomePage> {
   refresh(void Function() func) {
     setState(() {
       func();
@@ -22,7 +22,8 @@ class NotesWidgetState extends State<NotesWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Scaffold(
+        body: Stack(
       children: [
         Container(
             decoration: BoxDecoration(
@@ -94,6 +95,6 @@ class NotesWidgetState extends State<NotesWidget> {
                   ],
                 )))
       ],
-    );
+    ));
   }
 }

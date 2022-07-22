@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list/widgets/colors.dart';
-import 'package:todo_list/widgets/notes_widget.dart';
+import 'package:todo_list/home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,77 +16,38 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
           textTheme: const TextTheme(
-        headline1: TextStyle(
-          fontSize: 35,
-          fontFamily: "LemonTuesday",
-          color: Colors.black87,
-          fontWeight: FontWeight.w500,
-          shadows: [
-            Shadow(
-              blurRadius: 8,
-              color: Colors.lightBlue,
-              offset: Offset(-2.0, 1.0),
+            headline1: TextStyle(
+              fontSize: 35,
+              fontFamily: "LemonTuesday",
+              color: Colors.black87,
+              fontWeight: FontWeight.w500,
+              shadows: [
+                Shadow(
+                  blurRadius: 8,
+                  color: Colors.lightBlue,
+                  offset: Offset(-2.0, 1.0),
+                ),
+              ],
             ),
-          ],
-        ),
-        headline2: TextStyle(
-            fontSize: 27, fontFamily: "Parabola", color: Colors.black87),
-        headline3: TextStyle(
-            fontSize: 16,
-            fontFamily: "MullerNarrow",
-            color: Colors.black87,
-            fontWeight: FontWeight.w500),
-        bodyText1: TextStyle(
-            fontSize: 15,
-            fontFamily: "MullerNarrow",
-            color: Colors.black87,
-            fontWeight: FontWeight.w500),
-        bodyText2: TextStyle(
-            fontSize: 16,
-            color: Colors.black87,
-            fontWeight: FontWeight.w600),
-      )),
-      home: const MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return const Scaffold(
-      body: NotesWidget(),
+            headline2: TextStyle(
+                fontSize: 27, fontFamily: "Parabola", color: Colors.black87),
+            headline3: TextStyle(
+                fontSize: 16,
+                fontFamily: "MullerNarrow",
+                color: Colors.black87,
+                fontWeight: FontWeight.w500),
+            bodyText1: TextStyle(
+                fontSize: 15,
+                fontFamily: "MullerNarrow",
+                color: Colors.black87,
+                fontWeight: FontWeight.w500),
+            bodyText2: TextStyle(
+                fontSize: 16,
+                fontFamily: "MullerNarrow",
+                color: Colors.black87,
+                fontWeight: FontWeight.w600),
+          )),
+      home: const HomePage(),
     );
   }
 }
