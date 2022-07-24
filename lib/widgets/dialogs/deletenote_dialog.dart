@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../colors.dart';
+import '../colors_and_icons.dart';
 import '../functions.dart';
 
 class DeleteNoteDialog extends StatefulWidget {

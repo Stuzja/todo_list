@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:todo_list/widgets/colors.dart';
+import 'package:todo_list/widgets/colors_and_icons.dart';
 import 'package:todo_list/widgets/list_notes.dart';
 import 'dialogs/deletenote_dialog.dart';
 import 'dialogs/editnote_dialog.dart';
@@ -28,21 +28,10 @@ class NoteWidgetState extends State<NoteWidget> {
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(
             children: [
-              if (widget.note.priority == Priority.low)
-                SizedBox(
-                    height: 30,
-                    width: 30,
-                    child: Image.asset("assets/images/yellow1.png")),
+              if (widget.note.priority == Priority.low) const IconLowWidget(),
               if (widget.note.priority == Priority.medium)
-                SizedBox(
-                    height: 30,
-                    width: 30,
-                    child: Image.asset("assets/images/blue4.png")),
-              if (widget.note.priority == Priority.high)
-                SizedBox(
-                    height: 30,
-                    width: 30,
-                    child: Image.asset("assets/images/red11.png")),
+                const IconMediumWidget(),
+              if (widget.note.priority == Priority.high) const IconHighWidget(),
               SizedBox(
                   width: MediaQuery.of(context).size.width - 128,
                   child: Text(widget.note.title,

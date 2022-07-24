@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:intl/intl.dart';
 import 'package:todo_list/widgets/dialogs/date_picker.dart';
+import 'package:todo_list/widgets/dialogs/priority_picker.dart';
 import 'package:todo_list/widgets/note.dart';
-
-import '../colors.dart';
+import '../colors_and_icons.dart';
 import '../functions.dart';
 
 class AddNoteDialog extends StatefulWidget {
@@ -26,9 +24,19 @@ class AddNoteDialogState extends State<AddNoteDialog> {
   bool wasTap3 = false;
   bool wasTapCalendar = false;
 
-  void refresh(void Function() func) {
+  void refreshDate(DateTime newDate, bool wasTap) {
     setState(() {
-      func;
+      date = newDate;
+      wasTapCalendar = wasTap;
+    });
+  }
+
+  void refreshPriority(Priority newPriority, bool tap1, bool tap2, bool tap3) {
+    setState(() {
+      priority = newPriority;
+      wasTap1 = tap1;
+      wasTap2 = tap2;
+      wasTap3 = tap3;
     });
   }
 
@@ -39,102 +47,43 @@ class AddNoteDialogState extends State<AddNoteDialog> {
           child: Text('Добавление задачи',
               style: Theme.of(context).textTheme.headline1)),
       content: SingleChildScrollView(
-          child: Wrap(runSpacing: 4, children: [
-        Text("Введите название:", style: Theme.of(context).textTheme.bodyText2),
-        TextFormField(
-          style: Theme.of(context).textTheme.headline3,
-          onChanged: (value) {
-            setState(() {
-              title = value;
-            });
-          },
-        ),
-        Text("Введите описание:", style: Theme.of(context).textTheme.bodyText2),
-        TextFormField(
-          maxLines: 3,
-          style: Theme.of(context).textTheme.bodyText1,
-          onChanged: (value) {
-            setState(() {
-              text = value;
-            });
-          },
-        ),
-        Center(
-            child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    primary: wasTapCalendar ? lightGrey : lightBlue,
-                    minimumSize:
-                        Size(MediaQuery.of(context).size.width - 44, 40),
-                    textStyle: Theme.of(context).textTheme.bodyText2),
-                child: wasTapCalendar
-                    ? Text(DateFormat("yyyy-MM-dd").format(date))
-                    : const Text("Введите дату"),
-                onPressed: () async {
-                  DateTime? newDate = await showDatePicker(
-                      context: context,
-                      initialDate: date,
-                      firstDate: DateTime(DateTime.now().year,
-                          DateTime.now().month, DateTime.now().day),
-                      lastDate: DateTime(2100));
-                  if (newDate == null) return;
-                  setState(() {
-                    date = newDate;
-                    wasTapCalendar = true;
-                  });
-                })),
-        Text("Выберите приоритет выполнения:",
-            style: Theme.of(context).textTheme.bodyText2),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+        child: Wrap(
+          runSpacing: 4,
           children: [
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    primary: wasTap1 ? lightGrey : buttonBlue),
-                onPressed: () {
-                  setState(() {
-                    priority = Priority.low;
-                    wasTap1 = true;
-                    wasTap2 = false;
-                    wasTap3 = false;
-                  });
-                },
-                child: SizedBox(
-                    height: 30,
-                    width: 30,
-                    child: Image.asset("assets/images/yellow1.png"))),
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    primary: wasTap2 ? lightGrey : buttonBlue),
-                onPressed: () {
-                  setState(() {
-                    priority = Priority.medium;
-                    wasTap2 = true;
-                    wasTap1 = false;
-                    wasTap3 = false;
-                  });
-                },
-                child: SizedBox(
-                    height: 30,
-                    width: 30,
-                    child: Image.asset("assets/images/blue4.png"))),
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    primary: wasTap3 ? lightGrey : buttonBlue),
-                onPressed: () {
-                  setState(() {
-                    priority = Priority.high;
-                    wasTap3 = true;
-                    wasTap1 = false;
-                    wasTap2 = false;
-                  });
-                },
-                child: SizedBox(
-                    height: 30,
-                    width: 30,
-                    child: Image.asset("assets/images/red11.png"))),
+            Text("Введите название:",
+                style: Theme.of(context).textTheme.bodyText2),
+            TextFormField(
+              style: Theme.of(context).textTheme.headline3,
+              onChanged: (value) {
+                setState(() {
+                  title = value;
+                });
+              },
+            ),
+            Text("Введите описание:",
+                style: Theme.of(context).textTheme.bodyText2),
+            TextFormField(
+              maxLines: 3,
+              style: Theme.of(context).textTheme.bodyText1,
+              onChanged: (value) {
+                setState(() {
+                  text = value;
+                });
+              },
+            ),
+            DateTimeWidget(
+                date: date, wasTap: wasTapCalendar, refreshFunc: refreshDate),
+            Text("Выберите приоритет выполнения:",
+                style: Theme.of(context).textTheme.bodyText2),
+            PriorityPickerWidget(
+                wasTap1: wasTap1,
+                wasTap2: wasTap2,
+                wasTap3: wasTap3,
+                priority: priority,
+                refreshFunc: refreshPriority)
           ],
-        )
-      ])),
+        ),
+      ),
       actions: <Widget>[
         ElevatedButton(
           style: ElevatedButton.styleFrom(primary: buttonBlue),

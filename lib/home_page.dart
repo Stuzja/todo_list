@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:todo_list/widgets/colors.dart';
+import 'package:todo_list/widgets/colors_and_icons.dart';
 import 'package:todo_list/widgets/dialogs/addnote_dialog.dart';
 import 'package:todo_list/widgets/list_notes.dart';
 import 'widgets/functions.dart';
@@ -13,7 +13,6 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  
   refresh(void Function() func) {
     setState(() {
       func();
